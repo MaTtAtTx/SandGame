@@ -7,6 +7,8 @@ public class SandLab
   //add constants for particle types here
   public static final int EMPTY = 0;
   public static final int METAL = 1;
+  public static final int SAND = 2;
+  public static final int WATER = 3;
   
   //do not add any more fields below
   private int[][] grid;
@@ -23,10 +25,12 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[2];
+    names = new String[4];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
+    names[SAND] = "Sand";
+    names[WATER] = "Water";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -38,7 +42,7 @@ public class SandLab
   private void locationClicked(int row, int col, int tool)
   {
     //2. Assign the values associated with the parameters to the grid
-   
+    grid[row][col] = tool;
   }
 
   //copies each element of grid into the display
@@ -46,7 +50,35 @@ public class SandLab
   {
       //Step 3
    //Hint - use a nested for loop
-    
+	Color drawingColor = null;
+	Color gray = Color.GRAY;
+	Color tan = new Color(240,199,129);
+	Color black = Color.BLACK;
+	Color blue = new Color(53, 145, 217);
+    for (int rows = 0; rows < grid.length; rows++)
+    {
+    		for (int cols = 0; cols < grid[0].length; cols++)
+    		{
+    			if (grid[rows][cols] == METAL)
+    			{
+    				drawingColor = gray;
+    			}
+    			else if (grid[rows][cols] == SAND)
+    			{
+    				drawingColor = tan;
+    			}
+    			else if (grid[rows][cols] == WATER)
+    			{
+    				drawingColor = blue;
+    			}
+    			else
+    			{
+    				drawingColor = black;
+    			}
+    			
+    			display.setColor(rows, cols, drawingColor);
+    		}
+    }
   }
 
   //Step 5,7
@@ -58,8 +90,14 @@ public class SandLab
     //The scalar refers to how big the value could be
     //int someRandom = (int) (Math.random() * scalar)
     //remember that you need to watch for the edges of the array
+    	int rowRandom = (int) (Math.random() * grid.length - 1);
+    	int colRandom = (int) (Math.random() * grid[0].length);
     
-    
+    	if (grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == EMPTY)
+    	{
+    		grid[rowRandom][colRandom] = EMPTY;
+    		grid[rowRandom + 1][colRandom] = SAND;
+    	}
   }
   
   //do not modify this method!

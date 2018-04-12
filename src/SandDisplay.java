@@ -177,6 +177,6 @@ public class SandDisplay extends JComponent implements MouseListener,
   //speed of 100 returns 10^6
   private int computeSpeed(int sliderValue)
   {
-    return (int)Math.pow(10, 0.05 * sliderValue + 3);
+    return (int)Math.pow(10, 0.03 * sliderValue + 1);
   }
 }
