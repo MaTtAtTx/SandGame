@@ -98,18 +98,34 @@ public class SandLab
     		grid[rowRandom][colRandom] = EMPTY;
     		grid[rowRandom + 1][colRandom] = SAND;
     	}
-    	
-    	if (grid[rowRandom][colRandom] == WATER && (grid[rowRandom + 1][colRandom] == EMPTY || grid[rowRandom][colRandom + 1] == EMPTY || grid[rowRandom][colRandom - 1] == EMPTY))
+    	else if (grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == WATER)
     	{
-    		grid[rowRandom][colRandom] = EMPTY;
-    		int waterRandom = (int) (Math.random() * 2);
+    		grid[rowRandom][colRandom] = WATER;
+    		grid[rowRandom + 1][colRandom] = SAND;
+    	}
+    	
+    	if (grid[rowRandom][colRandom] == WATER)
+    	{
+    		int waterRandom = (int) (Math.random() * 3);
     		switch (waterRandom)
     		{
-    		case 0: 		grid[rowRandom + 1][colRandom] = WATER;
+    			case 0:	if (colRandom <= (grid[0].length - 2) && grid[rowRandom][colRandom + 1] == EMPTY)
+    					{
+    						grid[rowRandom][colRandom] = EMPTY;
+    						grid[rowRandom][colRandom + 1] = WATER;
+    					}
     					break;
-    		case 1: 		grid[rowRandom][colRandom + 1] = WATER;
+    			case 1:	if (grid[rowRandom + 1][colRandom] == EMPTY)
+					{
+						grid[rowRandom][colRandom] = EMPTY;
+						grid[rowRandom + 1][colRandom] = WATER;
+					}
     					break;
-    		case 2: 		grid[rowRandom][colRandom - 1] = WATER;
+    			case 2:	if (colRandom > 0 && grid[rowRandom][colRandom - 1] == EMPTY)
+					{
+						grid[rowRandom][colRandom] = EMPTY;
+						grid[rowRandom][colRandom - 1] = WATER;
+					}
     					break;
     		}
     	}
