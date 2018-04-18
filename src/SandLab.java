@@ -97,7 +97,7 @@ public class SandLab
     //The scalar refers to how big the value could be
     //int someRandom = (int) (Math.random() * scalar)
     //remember that you need to watch for the edges of the array
-    	int rowRandom = (int) (Math.random() * grid.length - 1);
+    	int rowRandom = (int) (Math.random() * grid.length);
     	int colRandom = (int) (Math.random() * grid[0].length);    	
     	
     	if (grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == EMPTY)
@@ -147,7 +147,7 @@ public class SandLab
     						grid[rowRandom][colRandom] = EMPTY;
     						grid[rowRandom][colRandom + 1] = ACIDGAS;
     					}
-    			case 1:	if (rowRandom <= grid.length)
+    			case 1:	if (rowRandom <= grid.length - 2)
     					{
     						grid[rowRandom][colRandom] = EMPTY;
     						grid[rowRandom + 1][colRandom] = ACIDGAS;
