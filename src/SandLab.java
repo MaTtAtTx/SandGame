@@ -9,6 +9,7 @@ public class SandLab
   public static final int METAL = 1;
   public static final int SAND = 2;
   public static final int WATER = 3;
+  public static final int ACIDGAS = 4;
   
   //do not add any more fields below
   private int[][] grid;
@@ -25,12 +26,13 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[4];
+    names = new String[5];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
+    names[ACIDGAS] = "Acid Gas";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -55,6 +57,7 @@ public class SandLab
 	Color tan = new Color(240,199,129);
 	Color black = Color.BLACK;
 	Color blue = new Color(53, 145, 217);
+	Color green = Color.GREEN;
     for (int rows = 0; rows < grid.length; rows++)
     {
     		for (int cols = 0; cols < grid[0].length; cols++)
@@ -70,6 +73,10 @@ public class SandLab
     			else if (grid[rows][cols] == WATER)
     			{
     				drawingColor = blue;
+    			}
+    			else if (grid[rows][cols] == ACIDGAS)
+    			{
+    				drawingColor = green;
     			}
     			else
     			{
@@ -127,6 +134,34 @@ public class SandLab
 						grid[rowRandom][colRandom - 1] = WATER;
 					}
     					break;
+    		}
+    	}
+    	
+    	if (grid[rowRandom][colRandom] == ACIDGAS)
+    	{
+    		int acidRandom = (int) (Math.random() * 4);
+    		switch (acidRandom)
+    		{
+    			case 0:	if (colRandom <= (grid[0].length - 2))
+    					{
+    						grid[rowRandom][colRandom] = EMPTY;
+    						grid[rowRandom][colRandom + 1] = ACIDGAS;
+    					}
+    			case 1:	if (rowRandom <= grid.length)
+    					{
+    						grid[rowRandom][colRandom] = EMPTY;
+    						grid[rowRandom + 1][colRandom] = ACIDGAS;
+    					}
+    			case 2:	if (colRandom > 0)
+					{
+    						grid[rowRandom][colRandom] = EMPTY;
+						grid[rowRandom][colRandom - 1] = ACIDGAS;
+					}
+    			case 3:	if (rowRandom > 0)
+    					{
+    						grid[rowRandom][colRandom] = EMPTY;
+    						grid[rowRandom - 1][colRandom] = ACIDGAS;
+    					}
     		}
     	}
   }
