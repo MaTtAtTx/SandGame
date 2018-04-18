@@ -100,12 +100,12 @@ public class SandLab
     	int rowRandom = (int) (Math.random() * grid.length);
     	int colRandom = (int) (Math.random() * grid[0].length);    	
     	
-    	if (grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == EMPTY)
+    	if (rowRandom <= (grid.length - 2) && grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == EMPTY)
     	{
     		grid[rowRandom][colRandom] = EMPTY;
     		grid[rowRandom + 1][colRandom] = SAND;
     	}
-    	else if (grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == WATER)
+    	else if (rowRandom <= (grid.length - 2) && grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == WATER)
     	{
     		grid[rowRandom][colRandom] = WATER;
     		grid[rowRandom + 1][colRandom] = SAND;
@@ -122,7 +122,7 @@ public class SandLab
     						grid[rowRandom][colRandom + 1] = WATER;
     					}
     					break;
-    			case 1:	if (grid[rowRandom + 1][colRandom] == EMPTY)
+    			case 1:	if (rowRandom <= (grid.length - 2) && grid[rowRandom + 1][colRandom] == EMPTY)
 					{
 						grid[rowRandom][colRandom] = EMPTY;
 						grid[rowRandom + 1][colRandom] = WATER;
