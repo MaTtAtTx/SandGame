@@ -10,6 +10,9 @@ public class SandLab
   public static final int SAND = 2;
   public static final int WATER = 3;
   public static final int ACIDGAS = 4;
+  public static final int LAVA = 5;
+  public static final int GLASS = 6;
+  public static final int OBSIDIAN = 7;
   
   //do not add any more fields below
   private int[][] grid;
@@ -26,13 +29,14 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[5];
+    names = new String[6];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
     names[ACIDGAS] = "Acid Gas";
+    names[LAVA] = "Lava";
     
     //1. Add code to initialize the data member grid with same dimensions
     grid = new int[numRows][numCols];
@@ -56,8 +60,11 @@ public class SandLab
 	Color gray = Color.GRAY;
 	Color tan = new Color(240,199,129);
 	Color black = Color.BLACK;
-	Color blue = new Color(53, 145, 217);
+	Color blue = new Color(53,145,217);
 	Color green = Color.GREEN;
+	Color redOrange = new Color(255,104,22);
+	Color silver = new Color(247,245,243);
+	Color blueBlack = new Color(48,9,87);
     for (int rows = 0; rows < grid.length; rows++)
     {
     		for (int cols = 0; cols < grid[0].length; cols++)
@@ -77,6 +84,18 @@ public class SandLab
     			else if (grid[rows][cols] == ACIDGAS)
     			{
     				drawingColor = green;
+    			}
+    			else if (grid[rows][cols] == LAVA)
+    			{
+    				drawingColor = redOrange;
+    			}
+    			else if (grid[rows][cols] == GLASS)
+    			{
+    				drawingColor = silver;
+    			}
+    			else if (grid[rows][cols] == OBSIDIAN)
+    			{
+    				drawingColor = blueBlack;
     			}
     			else
     			{
@@ -105,10 +124,33 @@ public class SandLab
     		grid[rowRandom][colRandom] = EMPTY;
     		grid[rowRandom + 1][colRandom] = SAND;
     	}
-    	else if (rowRandom <= (grid.length - 2) && grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == WATER)
+    	if (rowRandom <= (grid.length - 2) && grid[rowRandom][colRandom] == SAND && grid[rowRandom + 1][colRandom] == WATER)
     	{
     		grid[rowRandom][colRandom] = WATER;
     		grid[rowRandom + 1][colRandom] = SAND;
+    	}
+    	if (rowRandom <= (grid.length - 2) && grid[rowRandom][colRandom] == LAVA && grid[rowRandom + 1][colRandom] == SAND)
+    	{
+    		grid[rowRandom][colRandom] = EMPTY;
+    		grid[rowRandom + 1][colRandom] = GLASS;
+    	}
+    	if (rowRandom <= (grid.length - 2)) 
+    	{	
+    		if ((grid[rowRandom][colRandom] == LAVA && grid[rowRandom + 1][colRandom] == WATER) || (grid[rowRandom][colRandom] == WATER && grid[rowRandom + 1][colRandom] == LAVA))
+		{
+    			grid[rowRandom][colRandom] = EMPTY;
+    			grid[rowRandom + 1][colRandom] = OBSIDIAN;
+		}
+		else if (colRandom <= (grid[0].length - 2) && (grid[rowRandom][colRandom] == LAVA && grid[rowRandom][colRandom + 1] == WATER) || (grid[rowRandom][colRandom] == WATER && grid[rowRandom][colRandom + 1] == LAVA))
+		{
+			grid[rowRandom][colRandom] = EMPTY;
+			grid[rowRandom][colRandom + 1] = OBSIDIAN;
+		}
+		else if (colRandom > 0 && (grid[rowRandom][colRandom] == LAVA && grid[rowRandom][colRandom - 1] == WATER) || (grid[rowRandom][colRandom] == WATER && grid[rowRandom][colRandom - 1] == LAVA))
+		{
+			grid[rowRandom][colRandom] = EMPTY;
+			grid[rowRandom][colRandom - 1] = OBSIDIAN;
+		}
     	}
     	
     	if (grid[rowRandom][colRandom] == WATER)
@@ -132,6 +174,32 @@ public class SandLab
 					{
 						grid[rowRandom][colRandom] = EMPTY;
 						grid[rowRandom][colRandom - 1] = WATER;
+					}
+    					break;
+    		}
+    	}
+    	
+    	if (grid[rowRandom][colRandom] == LAVA)
+    	{
+    		int lavaRandom = (int) (Math.random() * 3);
+    		switch (lavaRandom)
+    		{
+    			case 0:	if (colRandom <= (grid[0].length - 2) && grid[rowRandom][colRandom + 1] == EMPTY)
+    					{
+    						grid[rowRandom][colRandom] = EMPTY;
+    						grid[rowRandom][colRandom + 1] = LAVA;
+    					}
+    					break;
+    			case 1:	if (rowRandom <= (grid.length - 2) && grid[rowRandom + 1][colRandom] == EMPTY)
+					{
+						grid[rowRandom][colRandom] = EMPTY;
+						grid[rowRandom + 1][colRandom] = LAVA;
+					}
+    					break;
+    			case 2:	if (colRandom > 0 && grid[rowRandom][colRandom - 1] == EMPTY)
+					{
+						grid[rowRandom][colRandom] = EMPTY;
+						grid[rowRandom][colRandom - 1] = LAVA;
 					}
     					break;
     		}
